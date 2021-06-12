@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" >
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stick&display=swap">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <meta name="description" content="全角と半角が混在した文章を変換して、全角半角を統一します。変換後の文章を見ながらスペースの除去などもできます。">
 <meta name="keywords" content="全角,半角,ぜんかく,はんかく,ゼンカク,ハンカク,ｾﾞﾝｶｸ,ﾊﾝｶｸ,変換,へんかん,ヘンカン,ﾍﾝｶﾝ,便利,べんり,ツール,ﾂｰﾙ,tool,文章,ぶんしょう,テキスト,ﾃｷｽﾄ,ハイライト,ﾊｲﾗｲﾄ">
@@ -260,7 +260,7 @@
 </div>
 
 <div>
-<button class="btn btn-sm btn-info convert-btn" name="change" onclick="copy()"><i class="far fa-copy"></i>&nbsp;Copy</button>
+<button class="btn btn-sm btn-info convert-btn" name="change" onclick="copy()"><i class="far fa-copy"></i>&nbsp;コピー</button>
 <button class="btn btn-sm btn-warning convert-btn" name="change" onclick="deleteHalfSpace()"><i class="far fa-trash-alt"></i>&nbsp;半角スペース除去</button>
 <button class="btn btn-sm btn-warning convert-btn" name="change" onclick="deleteFullSpace()"><i class="far fa-trash-alt"></i>&nbsp;全角スペース除去</button>
 <button class="btn btn-sm btn-warning convert-btn" name="change" onclick="deleteNewLine()"><i class="far fa-trash-alt"></i>&nbsp;改行除去</button>
@@ -306,14 +306,17 @@
 </div>
 </div>
 
-<div id="copied-toast" class="toast d-flex align-items-center text-white bg-info border-0" role="alert" aria-live="assertive" aria-atomic="true">
-<div class="toast-body">コピーしました。</div>
-<button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+<div class="toast-container position-fixed p-3 bottom-0 start-50 translate-middle-x" data-original-class="toast-container position-relative p-3">
+<div id="copied-toast" class="toast fade text-white bg-info border-0" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="toast-body">
+コピーしました。
+</div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-<script src="convert.js"></script>
-<script src="report-form.js"></script>
+<script src="/convert.js"></script>
+<script src="/report-form.js"></script>
 
 </body>
 </html>
