@@ -1,0 +1,319 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>全角半角変換ツール</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" >
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stick&display=swap">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<meta name="description" content="全角と半角が混在した文章を変換して、全角半角を統一します。変換後の文章を見ながらスペースの除去などもできます。">
+<meta name="keywords" content="全角,半角,ぜんかく,はんかく,ゼンカク,ハンカク,ｾﾞﾝｶｸ,ﾊﾝｶｸ,変換,へんかん,ヘンカン,ﾍﾝｶﾝ,便利,べんり,ツール,ﾂｰﾙ,tool,文章,ぶんしょう,テキスト,ﾃｷｽﾄ,ハイライト,ﾊｲﾗｲﾄ">
+</head>
+
+<body>
+<div class="container">
+<div class="py-5">
+<h1>全角半角変換ツール</h1>
+<p>全角と半角が混在した文章を変換して、全角半角を統一します。<br>
+変換後の文章を見ながらスペースの除去などもできます。</p>
+</div>
+
+
+<div class="row">
+<div class="col-lg-5 margin-btm">
+
+<section id="src-area">
+<h2 id="title-src">変換前テキスト</h2>
+
+<textarea class="form-control" id="src-text" rows="10" placeholder="変換したいテキストを入力してください"></textarea>
+<small class="text-muted">※50,000文字以内</small>
+<div class="invalid-feedback" id="src-text-error"></div>
+</section>
+
+</div>
+
+<div class="col-lg-7 margin-btm">
+<section id="rule-area">
+<h2>変換ルール</h2>
+
+<div class="row">
+<div class="col-md-6 margin-btm-small">
+<label class="rule-label">数字</label>
+<div class="form-check">
+<input class="form-check-check" id="number-half-width" name="number_rule" type="radio" value="half_width" checked="checked">
+<label class="form-check-label" for="number-half-width">半角数字に変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="number-full-width" name="number_rule" type="radio" value="full_width">
+<label class="form-check-label" for="number-full-width">全角数字に変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="number-do-nothing" name="number_rule" type="radio" value="do_nothing">
+<label class="form-check-label" for="number-do-nothing">変換しない</label>
+</div>
+</div>
+
+<div class="col-md-6 margin-btm-small">
+<label class="rule-label">アルファベット</label>
+<div class="form-check">
+<input class="form-check-check" id="alphabet-half-width" name="alphabet_rule" type="radio" value="half_width" checked="checked">
+<label class="form-check-label" for="alphabet-half-width">半角アルファベットに変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="alphabet-full-width" name="alphabet_rule" type="radio" value="full_width" >
+<label class="form-check-label" for="alphabet-full-width">全角アルファベットに変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="alphabet-do-nothing" name="alphabet_rule" type="radio" value="do_nothing" >
+<label class="form-check-label" for="alphabet-do-nothing">変換しない</label>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-6 margin-btm-small">
+<label class="rule-label">カタカナ</label>&nbsp;<small class="text-muted">※「ー」「～」「、」「。」含む</small>
+<div class="form-check">
+<input class="form-check-check" id="katakana-half-width" name="katakana_rule" type="radio" value="half_width" >
+<label class="form-check-label" for="katakana-half-width">半角カタカナに変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="katakana-full-width" name="katakana_rule" type="radio" value="full_width" checked="checked">
+<label class="form-check-label" for="katakana-full-width">全角カタカナに変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="katakana-do-nothing" name="katakana_rule" type="radio" value="do_nothing" >
+<label class="form-check-label" for="katakana-do-nothing">変換しない</label>
+</div>
+</div>
+
+<div class="col-md-6 margin-btm-small">
+<label class="rule-label">記号</label>
+<div class="form-check">
+<input class="form-check-check" id="symbol-half-width" name="symbol_rule" type="radio" value="half_width" onclick="targetSymbol('on')" >
+<label class="form-check-label" for="symbol-half-width">半角記号に変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="symbol-full-width" name="symbol_rule" type="radio" value="full_width" onclick="targetSymbol('on')" >
+<label class="form-check-label" for="symbol-full-width">全角記号に変換する</label>
+</div>
+<div class="form-check">
+<input class="form-check-check" id="symbol-do-nothing" name="symbol_rule" type="radio" value="do_nothing" onclick="targetSymbol('off')" checked="checked">
+<label class="form-check-label" for="symbol-do-nothing">変換しない</label>
+</div>
+</div>
+</div>
+
+<div id="target-symbol-area">
+<label class="rule-label">変換する記号</label>　<a href="javascript:void(0)" onclick="allCheckOnOff();" class="all-check">全チェックON/OFF</a>
+
+<div class="row">
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-dot" name="target_symbol" type="checkbox" value="dot" checked="checked" >
+<label class="form-check-label" for="target-symbol-dot">ドット（．）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-comma" name="target_symbol" type="checkbox" value="comma" checked="checked">
+<label class="form-check-label" for="target-symbol-comma">カンマ（，）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-hyphen" name="target_symbol" type="checkbox" value="hyphen" checked="checked">
+<label class="form-check-label" for="target-symbol-hyphen">ハイフン（－）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-under-score" name="target_symbol" type="checkbox" value="under_score" checked="checked">
+<label class="form-check-label" for="target-symbol-under-score">アンダーバー（ ＿ ）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-slash" name="target_symbol" type="checkbox" value="slash" checked="checked">
+<label class="form-check-label" for="target-symbol-slash">スラッシュ（／）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-colon" name="target_symbol" type="checkbox" value="colon" checked="checked">
+<label class="form-check-label" for="target-symbol-colon">コロン（：）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-semicolon" name="target_symbol" type="checkbox" value="semicolon" checked="checked">
+<label class="form-check-label" for="target-symbol-semicolon">セミコロン（；）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-pipe" name="target_symbol" type="checkbox" value="pipe" checked="checked">
+<label class="form-check-label" for="target-symbol-pipe">パイプ（｜）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-plus" name="target_symbol" type="checkbox" value="plus" checked="checked">
+<label class="form-check-label" for="target-symbol-plus">プラス（＋）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-equal" name="target_symbol" type="checkbox" value="equal" checked="checked">
+<label class="form-check-label" for="target-symbol-equal">イコール（＝）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-percent" name="target_symbol" type="checkbox" value="percent" checked="checked">
+<label class="form-check-label" for="target-symbol-percent">パーセント（％）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-sharp" name="target_symbol" type="checkbox" value="sharp" checked="checked">
+<label class="form-check-label" for="target-symbol-sharp">シャープ（＃）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-single-quote" name="target_symbol" type="checkbox" value="single_quote" checked="checked">
+<label class="form-check-label" for="target-symbol-single-quote">シングルクォート（ ’ ）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-double-quote" name="target_symbol" type="checkbox" value="double_quote" checked="checked">
+<label class="form-check-label" for="target-symbol-double-quote">ダブルクォート（ ” ）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-maru-kakko" name="target_symbol" type="checkbox" value="maru_kakko" checked="checked">
+<label class="form-check-label" for="target-symbol-maru-kakko">丸カッコ（（ ））</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-namikakko" name="target_symbol" type="checkbox" value="nami_kakko" checked="checked">
+<label class="form-check-label" for="target-symbol-nami-kakko">波カッコ（｛ ｝）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-kaku-kakko" name="target_symbol" type="checkbox" value="kaku_kakko" checked="checked">
+<label class="form-check-label" for="target-symbol-kaku-kakko">角カッコ（［ ］）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-futougou" name="target_symbol" type="checkbox" value="futougou" checked="checked">
+<label class="form-check-label" for="target-symbol-futougou">不等号（＜ ＞）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-exclamation-mark" name="target_symbol" type="checkbox" value="exclamation_mark" checked="checked">
+<label class="form-check-label" for="target-symbol-exclamation-mark">ビックリマーク（！）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-question-mark" name="target_symbol" type="checkbox" value="question_mark" checked="checked">
+<label class="form-check-label" for="target-symbol-question-mark">ハテナマーク（？）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-and" name="target_symbol" type="checkbox" value="and" checked="checked">
+<label class="form-check-label" for="target-symbol-and">アンパサンド（＆）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-dollar" name="target_symbol" type="checkbox" value="dollar" checked="checked">
+<label class="form-check-label" for="target-symbol-dollar">ドルマーク（＄）</label>
+</div>
+
+<div class="form-check col-md-4">
+<input class="form-check-check" id="target-symbol-space" name="target_symbol" type="checkbox" value="space" checked="checked">
+<label class="form-check-label" for="target-symbol-space">スペース</label>
+</div>
+</div>
+
+</div>
+</div>
+
+<p class="text-center text-danger"><small>※入力した内容はサーバには送信されません。自己責任においてご利用ください。</small></p>
+
+<button class="btn btn-primary btn-lg btn-change d-grid col-6 mx-auto margin-btm-big" name="change" onclick="convert()">変換する</button>
+</div>
+</section>
+
+<section id="dist-area">
+<h2 id="title-dist">変換後テキスト</h2>
+
+<div class="btn-group btn-group-sm highlight-btn" role="group">
+<input type="radio" class="btn-check" id="change-do-highlight" name="change_highlight" value="h" onclick="highlightOnOff()" checked >
+<label class="btn btn-outline-secondary" for="change-do-highlight">変更点をハイライトする</label>
+<input type="radio" class="btn-check" id="change-no-highlight" name="change_highlight" value="n" onclick="highlightOnOff()">
+<label class="btn btn-outline-secondary" for="change-no-highlight">ハイライトしない</label>
+</div>
+
+<div class="btn-group btn-group-sm highlight-btn" role="group">
+<input type="radio" class="btn-check" id="half-space-do-highlight" name="half_space_highlight" value="h" onclick="highlightOnOff()" checked>
+<label class="btn btn-outline-secondary" for="half-space-do-highlight">半角スペースをハイライトする</label>
+<input type="radio" class="btn-check" id="half-space-no-highlight" name="half_space_highlight" value="n" onclick="highlightOnOff()">
+<label class="btn btn-outline-secondary" for="half-space-no-highlight">ハイライトしない</label>
+</div>
+
+<div class="btn-group btn-group-sm highlight-btn" role="group">
+<input type="radio" class="btn-check" id="full-space-do-highlight" name="full_space_highlight" value="h" onclick="highlightOnOff()" checked>
+<label class="btn btn-outline-secondary" for="full-space-do-highlight">全角スペースをハイライトする</label>
+<input type="radio" class="btn-check" id="full-space-no-highlight" name="full_space_highlight" value="n" onclick="highlightOnOff()">
+<label class="btn btn-outline-secondary" for="full-space-no-highlight">ハイライトしない</label>
+</div>
+
+<div>
+<button class="btn btn-sm btn-info convert-btn" name="change" onclick="copy()"><i class="far fa-copy"></i>&nbsp;Copy</button>
+<button class="btn btn-sm btn-warning convert-btn" name="change" onclick="deleteHalfSpace()"><i class="far fa-trash-alt"></i>&nbsp;半角スペース除去</button>
+<button class="btn btn-sm btn-warning convert-btn" name="change" onclick="deleteFullSpace()"><i class="far fa-trash-alt"></i>&nbsp;全角スペース除去</button>
+<button class="btn btn-sm btn-warning convert-btn" name="change" onclick="deleteNewLine()"><i class="far fa-trash-alt"></i>&nbsp;改行除去</button>
+</div>
+
+<div>
+<div class="margin-btm dist-text" id="dist-text">
+</div>
+</div>
+</section>
+
+<button class="btn btn-success btn-report" data-bs-toggle="modal" data-bs-target="#reportModal"><i class="fas fa-envelope"></i>&nbsp;要望・バグ報告</button>
+
+<!--<footer class="py-3 text-center">
+ Copyright(C) 2021 gongon-tools. All Rights Reserved.
+</footer>-->
+</div>
+
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModal" aria-hidden="true" data-bs-backdrop="static">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">&nbsp;要望・バグ報告</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+<div id="report-form">
+<p>ご要望、バグ報告はこちらからお願いします。<br>
+必ずしも対応できるとは限りませんので、ご了承ください。</p>
+<textarea class="form-control" rows="10" placeholder="" id="contact-form-body"></textarea>
+<div class="invalid-feedback" id="contact-form-body-error"></div>
+<input type="hidden" id="contact-form-type" value="zenkakuHankakuConvert">
+</div>
+<div id="report-complete">
+<p>送信しました。<br>ありがとうございました。</p>
+</div>
+</div>
+<div class="modal-footer">
+<button type="button" id="report-send-btn" class="btn btn-success" onclick="sendContactForm()">送信</button>
+<button type="button" id="report-close-btn" class="btn btn-secondary" data-bs-dismiss="modal">閉じる</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="copied-toast" class="toast d-flex align-items-center text-white bg-info border-0" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="toast-body">コピーしました。</div>
+<button type="button" class="btn-close btn-close-white ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<script src="convert.js"></script>
+<script src="report-form.js"></script>
+
+</body>
+</html>
