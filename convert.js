@@ -201,6 +201,11 @@ function convert() {
     distText = changeKatakana(distText);
     distText = changeSymbol(distText);
 
+    //ハイライト設定をリセット
+    document.getElementById('change-do-highlight').checked = true;
+    document.getElementById('half-space-do-highlight').checked = true;
+    document.getElementById('full-space-do-highlight').checked = true;
+
     //表示
     display(srcText, distText);
 
@@ -473,10 +478,12 @@ function halfSpaceHighlight(array) {
     array.forEach(function(val, idx){
         if (val == ' ') {
             highlightArray.push('<span class="half-space-highlight-text">');
-            highlightArray.push('&nbsp;');
-            highlightArray.push('</span>');
-        } else {
-            highlightArray.push(val);
+        }
+
+        highlightArray.push(val);
+
+        if (val == ' ') {
+          highlightArray.push('</span>');
         }
     });
 
@@ -516,7 +523,11 @@ function escape(array) {
             val = val.replace(/>/g, '&gt;');
         }
 
-        escapeArray.push(val);
+        if (val == ' ') {
+            val = '&nbsp;';
+        }
+
+          escapeArray.push(val);
     });
 
     return escapeArray;
@@ -579,6 +590,7 @@ function deleteHalfSpace() {
 
     //表示
     display(srcText, distText);
+    highlightOnOff();
 }
 
 //全角スペース除去
@@ -588,6 +600,7 @@ function deleteFullSpace() {
 
     //表示
     display(srcText, distText);
+    highlightOnOff();
 }
 
 //改行除去
@@ -597,6 +610,7 @@ function deleteNewLine() {
 
     //表示
     display(srcText, distText);
+    highlightOnOff();
 }
 
 //トースト初期化
