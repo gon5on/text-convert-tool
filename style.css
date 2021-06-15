@@ -3,6 +3,8 @@ body {
   font-size: 18px;
   color: #666666;
   line-height: 1.5em;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 h1 {
@@ -80,8 +82,8 @@ footer {
   margin-bottom: 36px;
 }
 
-.margin-btm-big {
-  margin-bottom: 64px;
+.margin-top-big {
+  margin-top: 64px;
 }
 
 .all-check {
